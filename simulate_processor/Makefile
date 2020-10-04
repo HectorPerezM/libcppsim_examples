@@ -9,7 +9,7 @@ EXEC=sim
 BIN = bin
 OBJ = obj
 
-OBJS= obj/main.o obj/util.o
+OBJS= obj/main.o obj/util.o obj/processor.o obj/taskGenerator.o obj/task.o
 
 all: main
 
@@ -19,7 +19,14 @@ main: clean $(OBJS)
 obj/main.o: src/main.cpp
 	$(CXX) -c -o $(OBJ)/main.o src/main.cpp $(CFLAGS)
 
-obj/processor.o: 
+obj/task.o: src/task/task.cpp
+	$(CXX) -c -o $(OBJ)/task.o src/task/task.cpp 
+
+obj/taskGenerator.o: src/taskGenerator/taskGenerator.cpp
+	$(CXX) -c -o $(OBJ)/taskGenerator.o src/taskGenerator/taskGenerator.cpp $(CFLAGS)
+
+obj/processor.o: src/processor/processor.cpp
+	$(CXX) -c -o $(OBJ)/processor.o src/processor/processor.cpp $(CFLAGS)
 
 obj/util.o: src/util/util.cpp src/util/util.hpp
 	$(CXX) -c -o $(OBJ)/util.o  src/util/util.cpp -Wno-deprecated -Wall

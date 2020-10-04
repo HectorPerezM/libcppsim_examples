@@ -2,16 +2,29 @@
 #define PROCESSOR_H
 
 #include<iostream>
+#include "../task/task.hpp"
+#include "../../../libcppsim-0.2.5/src/cppsim.hh"
+
 using namespace std;
 
-class Processor {
+class Processor: public process {
     private:
-        string name;
+        int processorId;
+        bool busy;
+        list<Task*> task_queue;
+        Task *task;
+        double service_time;
+
     public:
-        Processor(string n);
+        Processor(string name, int id);
 
-        void sendName();
+        int getId();
+        bool getState();
+        double getServiceTime();
+        void addTask(Task *t);
 
+    protected:
+        void inner_body(void);
 };
 
 #endif

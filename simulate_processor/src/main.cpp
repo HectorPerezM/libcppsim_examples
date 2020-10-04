@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include "util/util.hpp"
+#include "processor/processor.hpp"
+#include "taskGenerator/taskGenerator.hpp"
 #include "../../libcppsim-0.2.5/src/cppsim.hh"
 
 using namespace std;
@@ -8,6 +10,8 @@ using namespace std;
 class System: public process {
     private:
         string name;
+        handle<Processor> processor;
+        handle<TaskGenerator> task_generator;
         
     public:
         System(string _name) : process(_name) {
@@ -20,18 +24,37 @@ class System: public process {
 };
 
 void System::inner_body(void) {
-    cout << "Inner_body System" << endl;
-    cout << this->name << endl;
+    cout << "   In System" << endl;
+
+    /* Task Generator */
+    this->task_generator = new TaskGenerator("Task Generator", 100, 2.0);
+    this->task_generator->activate();
+
+    cout << "Before creating the processor" << endl;
+    /* Creates the processor */
+    this->processor = new Processor("1", 1);
+
+    /* Assing a processor to this task generator */
+    this->task_generator->setProcessor(&this->processor);
+
+    /* Activates the processor */
+    this->processor->activate();
+
+    cout << "Start simulation." << endl;
+    //Simulation will run for 5 seconds.
+    hold(5000000000000000000);
+    cout << "End simulation." << endl;
+
+
+    cout << "Processor service time: " << this->processor->getServiceTime() << endl;
+
+    //Terminates the simulation
+    end_simulation();
 }
 
 int main(void)
 {
-    cout << "Main ... " << endl;
-    Util util("THIS IS A TEST");
-
-    util.sendName();
-
-    
+    cout << "MAIN " << endl;    
     
     /*
         Se crea una instancia de la simulacion
