@@ -14,6 +14,8 @@ class Processor: public process {
         list<Task*> task_queue;
         Task *task;
         double service_time;
+        double total_task;
+        int task_queue_size;
 
     public:
         Processor(string name, int id);
@@ -22,6 +24,8 @@ class Processor: public process {
         bool getState();
         double getServiceTime();
         void addTask(Task *t);
+        list<Task*> getTaskQueue();
+        Task* getTask();
 
     protected:
         void inner_body(void);

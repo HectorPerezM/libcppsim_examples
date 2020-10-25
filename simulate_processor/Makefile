@@ -9,7 +9,7 @@ EXEC=sim
 BIN = bin
 OBJ = obj
 
-OBJS= obj/main.o obj/util.o obj/processor.o obj/taskGenerator.o obj/task.o
+OBJS= obj/main.o obj/util.o obj/processor.o obj/taskGenerator.o obj/task.o obj/monitor.o obj/log.o
 
 all: main
 
@@ -18,6 +18,13 @@ main: clean $(OBJS)
 
 obj/main.o: src/main.cpp
 	$(CXX) -c -o $(OBJ)/main.o src/main.cpp $(CFLAGS)
+
+
+obj/log.o: src/log/log.cpp
+	$(CXX) -c -o $(OBJ)/log.o src/log/log.cpp $(CFLAGS)
+
+obj/monitor.o: src/monitor/monitor.cpp
+	$(CXX) -c -o $(OBJ)/monitor.o src/monitor/monitor.cpp $(CFLAGS)
 
 obj/task.o: src/task/task.cpp
 	$(CXX) -c -o $(OBJ)/task.o src/task/task.cpp 
